@@ -1,0 +1,19 @@
+import { config } from "dotenv";
+config()
+
+export const 
+{ 
+    PORT, 
+
+    MYSQL_TYPE,
+    MYSQL_USER, 
+    MYSQL_PASSWORD,
+    MYSQL_HOST,
+    MYSQL_PORT,
+    MYSQL_DB,
+    
+    TOKEN_KEY,
+    
+    CORS_ORIGIN,
+    CORS_CREDENTIALS
+} = process.env ;
