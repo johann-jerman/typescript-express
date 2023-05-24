@@ -1,6 +1,15 @@
 export interface UserInterface {
-    id?: number;
-    email: string;
-    password: string;
-  }
-  
+  id?: number;
+  name: string;
+  lastname?: string;
+  email: string;
+  password: string;
+}
+
+export interface UserUpdateInt{
+  id?: number;
+  name?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+}

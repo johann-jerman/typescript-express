@@ -1,12 +1,11 @@
 import 'reflect-metadata';
 import express from "express";
-import { PORT } from "./config/enviroment";
+import { CORS_ORIGIN, PORT } from "./config/enviroment";
 import { Routes } from "./interfaces/Routes.interfaces";
-import { UserRoutes } from "./routes/Users.routes";
-import { createConnection } from 'typeorm';
-import { myDataSource } from './database/conection';
+import { db } from './database/conection';
+import cors from "cors";
 
-class App {
+export class App {
     public app : express.Application;
     public port : string| number;
     
@@ -15,6 +14,7 @@ class App {
         this.port = PORT || 3004
 
         this.initDBConnection()
+        this.initMiddleware()
         this.useRoutes(routes)
     }
 
@@ -28,11 +28,22 @@ class App {
 
     private async initDBConnection(){
         try {
-            let connect = await myDataSource.initialize()
-            console.log(connect.isInitialized, 'conectado a la base de datos');
+            let connect = await db.initialize()
+            
+            if(connect) console.log('conectado a la base de datos');
+            if(!connect) throw new Error('no se puedo conectar a la base de datos')
+            
         } catch (error) {
             console.log(error);
         }
+    }
+
+    private initMiddleware(){
+        this.app.use(express.urlencoded({extended: true}))
+        this.app.use(express.json())
+        this.app.use(cors({
+            origin: CORS_ORIGIN,
+        }))
     }
 
     private useRoutes(routes: Routes[]){
@@ -41,9 +52,3 @@ class App {
         })
     }
 }
-
-
-
-const app = new App([new UserRoutes()])
-
-app.listen()

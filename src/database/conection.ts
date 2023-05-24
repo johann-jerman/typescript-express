@@ -4,7 +4,7 @@ import { join } from "path";
 import { Users } from "./entity/User.entity";
 
 
-export const myDataSource = new DataSource({
+export const db = new DataSource({
     type: "mysql",
     host: MYSQL_HOST,
     port: 3306,

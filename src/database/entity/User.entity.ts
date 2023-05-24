@@ -11,6 +11,12 @@ export class Users extends BaseEntity implements UserInterface {
     id!: number;
 
     @Column()
+    name!: string;
+    
+    @Column()
+    lastname!: string;
+
+    @Column()
     @IsNotEmpty()
     @Unique(['email'])
     email!: string;
